@@ -1,0 +1,35 @@
+Pasos Code First:
+
+1. Incluir la libreria de entity framework
+2. Crear una clase que herede de DbContext
+	2.1 La clase debe ser publica
+	2.2 Utilizar la sintaxis :DbContext
+	2.3 Incluir System.Data.Entity;
+3. Crear una entidad
+	3.1 La clase debe ser publica
+	3.2 La propiedad de id de la clase debe seguir convencion del nombre: "Nombre de la entidad"+"Id"
+	3.3 Agregar propiedades
+	3.4 Si la propiedad es a otra entidad utilizar "Virtual" para habilitar "LazyLoading"
+	3.5 Si existen collecciones o listas, inicializarlas en el constructor de la clase
+4. Crear una DbSet por cada entidad.
+	4.1 El DbSet debe ser publico
+	4.2 El debe set de especificar la clase
+	4.3 Se debe brindar un nombre significativo
+5. Crear un Initializer
+	5.1 La clase debe ser publica
+	5.2 La clase hereda de CreateIfNotExists<"Nombre de la clase Contexto">()
+	5.3 Se sobrescribe el metodo "Seed()" de la clase madre
+	5.4 Se agregan datos a los DbSets del contexto
+	5.5 Se envian los cambios al servidor con el metodo SaveChanges();
+6. Se configura el App.Config para activar el initializer
+	6.1 Se agrega una seccion de "Configuration"
+	6.2 Se agrega una seccion de "AppSettings" dentro de la configuracion anterior
+	6.3 Se agrega una variable de configuracion del contexto y del initializer dentro de la seccion anterior
+7. Se configura el App.Config para incluir un connection string
+	7.1 Se agrega una seccion de "connectionStrings" dentro de la seccion de "Configuration"
+	7.2 Se agrega una variable con el nombre de la conexion y el valor del connection string de la base de datos
+8. Habilitar y configurar las migraciones
+	8.1 Abrir el "Package Manager Console"
+	8.2 Ejecutar el comando "Enable-Migrations"
+	8.3 Ejecutar el comando "Add-Migration 'Nombre de la migracion'"
+	8.4 Ejecutar el comando Update Database
